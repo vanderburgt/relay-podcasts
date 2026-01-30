@@ -15,7 +15,7 @@
 					artwork: s.artwork,
 					url: s.feedUrl,
 					description: '',
-					episodeCount: 0,
+					episodeCount: s.episode_count ?? 0,
 					categories: {}
 				}) satisfies Podcast
 		)

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getProxyImageUrl } from '$lib/api.js';
 	import type { Podcast } from '$lib/types.js';
 
 	interface Props {
@@ -14,7 +15,7 @@
 	class="bg-surface-raised hover:bg-surface-overlay flex items-center gap-3 rounded-xl p-3 transition-colors"
 >
 	<img
-		src={podcast.artwork}
+		src={getProxyImageUrl(podcast.artwork)}
 		alt={podcast.title}
 		class="h-14 w-14 shrink-0 rounded-lg object-cover"
 		loading="lazy"

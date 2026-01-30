@@ -5,6 +5,7 @@ export interface Subscription {
 	artwork: string;
 	feedUrl: string;
 	subscribed_at: string;
+	episode_count: number;
 	settings: PodcastSettings;
 }
 

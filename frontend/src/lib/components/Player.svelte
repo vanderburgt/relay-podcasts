@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getProxyImageUrl } from '$lib/api.js';
 	import { getPlayer, toggleFullPlayer, togglePlay } from '$lib/player.svelte.js';
 
 	const player = getPlayer();
@@ -9,7 +10,7 @@
 </script>
 
 {#if player.hasEpisode}
-	<div class="bg-surface-raised border-border fixed bottom-[calc(56px+env(safe-area-inset-bottom))] left-0 right-0 z-30 border-t">
+	<div class="bg-surface-raised border-border fixed bottom-[calc(49px+env(safe-area-inset-bottom))] left-0 right-0 z-30 border-t">
 		<div class="bg-brand/30 h-0.5">
 			<div class="bg-brand h-full transition-all" style="width: {progressPercent}%"></div>
 		</div>
@@ -23,7 +24,7 @@
 		>
 			{#if player.podcast?.artwork}
 				<img
-					src={player.podcast.artwork}
+					src={getProxyImageUrl(player.podcast.artwork)}
 					alt=""
 					class="h-10 w-10 shrink-0 rounded-md object-cover"
 				/>

@@ -5,6 +5,7 @@ from fastapi import Request
 
 CHUNK_SIZE = 64 * 1024  # 64KB chunks
 TIMEOUT = httpx.Timeout(10.0, read=None)  # No read timeout for streaming
+IMAGE_TIMEOUT = httpx.Timeout(10.0)  # Normal timeout for images
 
 # Headers to forward from client request
 REQUEST_HEADERS = {
@@ -69,3 +70,24 @@ async def stream_audio(
     except Exception:
         await client.aclose()
         raise
+
+
+async def fetch_image(url: str) -> tuple[bytes, int, dict[str, str]]:
+    """
+    Fetch an image from a URL.
+
+    Returns a tuple of (content bytes, status code, response headers).
+    """
+    async with httpx.AsyncClient(timeout=IMAGE_TIMEOUT, follow_redirects=True) as client:
+        response = await client.get(url)
+
+        response_headers = {}
+        for header in ["content-type", "cache-control", "etag", "last-modified"]:
+            if value := response.headers.get(header):
+                response_headers[header] = value
+
+        # Add long cache header for images
+        if "cache-control" not in response_headers:
+            response_headers["cache-control"] = "public, max-age=86400"
+
+        return response.content, response.status_code, response_headers

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getProxyImageUrl } from '$lib/api.js';
 	import ProgressBar from '$lib/components/ProgressBar.svelte';
 	import { getPlayer, seekRelative, setPlaybackRate, toggleFullPlayer, togglePlay } from '$lib/player.svelte.js';
 	import { getUserData } from '$lib/store.svelte.js';
@@ -33,7 +34,7 @@
 		<div class="flex flex-1 flex-col items-center justify-center px-8">
 			{#if player.podcast?.artwork}
 				<img
-					src={player.podcast.artwork}
+					src={getProxyImageUrl(player.podcast.artwork)}
 					alt=""
 					class="mb-8 aspect-square w-full max-w-xs rounded-2xl object-cover shadow-2xl"
 				/>
@@ -51,14 +52,14 @@
 			<div class="mb-6 flex items-center justify-center gap-6">
 				<button
 					onclick={() => seekRelative(-skipBackward)}
-					class="text-text-secondary hover:text-text-primary relative p-2 transition-colors"
+					class="text-text-secondary hover:text-text-primary flex flex-col items-center gap-1 p-2 transition-colors"
 					aria-label="Skip backward {skipBackward} seconds"
 				>
 					<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
 						<path d="M12.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0019 16V8a1 1 0 00-1.6-.8l-5.333 4z" />
 						<path d="M4.066 11.2a1 1 0 000 1.6l5.334 4A1 1 0 0011 16V8a1 1 0 00-1.6-.8l-5.334 4z" />
 					</svg>
-					<span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold">{skipBackward}</span>
+					<span class="text-[10px] font-bold">{skipBackward}</span>
 				</button>
 
 				<button
@@ -86,14 +87,14 @@
 
 				<button
 					onclick={() => seekRelative(skipForward)}
-					class="text-text-secondary hover:text-text-primary relative p-2 transition-colors"
+					class="text-text-secondary hover:text-text-primary flex flex-col items-center gap-1 p-2 transition-colors"
 					aria-label="Skip forward {skipForward} seconds"
 				>
 					<svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
 						<path d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4z" />
 						<path d="M19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z" />
 					</svg>
-					<span class="absolute inset-0 flex items-center justify-center text-[10px] font-bold">{skipForward}</span>
+					<span class="text-[10px] font-bold">{skipForward}</span>
 				</button>
 			</div>
 

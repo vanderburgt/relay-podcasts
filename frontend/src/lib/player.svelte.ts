@@ -46,6 +46,11 @@ export async function loadEpisode(episodeId: string, podcastId: string): Promise
 		currentEpisode = epRes.episode as unknown as Episode;
 		currentPodcast = podRes.feed as unknown as Podcast;
 
+		// Initialize duration from API data (audio element may update this later)
+		if (currentEpisode.duration) {
+			duration = currentEpisode.duration;
+		}
+
 		await setCurrentlyPlaying(episodeId, podcastId);
 
 		if (!audio) {
@@ -116,7 +121,10 @@ function setupAudioListeners() {
 	});
 
 	audio.addEventListener('durationchange', () => {
-		duration = audio!.duration || 0;
+		// Only update if audio element provides a valid duration
+		if (audio!.duration && isFinite(audio!.duration)) {
+			duration = audio!.duration;
+		}
 	});
 
 	audio.addEventListener('ended', handleEnded);

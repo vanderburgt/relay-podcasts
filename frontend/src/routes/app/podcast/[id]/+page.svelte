@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getProxyImageUrl } from '$lib/api.js';
 	import EpisodeCard from '$lib/components/EpisodeCard.svelte';
 	import { addSubscription, getUserData, removeSubscription } from '$lib/store.svelte.js';
 	import { showToast } from '$lib/toast.svelte.js';
@@ -20,6 +21,7 @@
 			artwork: data.podcast.artwork,
 			feedUrl: data.podcast.url,
 			subscribed_at: new Date().toISOString(),
+			episode_count: data.podcast.episodeCount,
 			settings: {
 				playback_speed: store.data.preferences.default_playback_speed,
 				skip_forward_seconds: store.data.preferences.default_skip_forward,
@@ -50,7 +52,7 @@
 
 	<div class="mb-6 flex gap-4">
 		<img
-			src={data.podcast.artwork}
+			src={getProxyImageUrl(data.podcast.artwork)}
 			alt={data.podcast.title}
 			class="h-28 w-28 shrink-0 rounded-xl object-cover shadow-lg"
 		/>

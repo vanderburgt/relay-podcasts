@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { getProxyImageUrl } from '$lib/api.js';
 	import EpisodeStatus from '$lib/components/EpisodeStatus.svelte';
 	import { loadEpisode } from '$lib/player.svelte.js';
 	import { addToQueue, getUserData } from '$lib/store.svelte.js';
@@ -67,7 +68,7 @@
 	<div class="mb-6 flex gap-4">
 		{#if data.episode.feedImage || data.episode.image}
 			<img
-				src={data.episode.feedImage || data.episode.image}
+				src={getProxyImageUrl(data.episode.feedImage || data.episode.image)}
 				alt=""
 				class="h-24 w-24 shrink-0 rounded-xl object-cover shadow-lg"
 			/>

@@ -60,6 +60,7 @@
 								artwork: podcast.artwork,
 								feedUrl: podcast.url,
 								subscribed_at: new Date().toISOString(),
+								episode_count: podcast.episodeCount ?? 0,
 								settings: {
 									playback_speed: store.data.preferences.default_playback_speed,
 									skip_forward_seconds: store.data.preferences.default_skip_forward,

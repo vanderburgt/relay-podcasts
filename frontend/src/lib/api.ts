@@ -88,10 +88,14 @@ export async function getEpisode(id: number): Promise<{ episode: Record<string, 
 	return request(`/api/episodes/${id}`);
 }
 
-// Audio proxy
+// Proxy URLs for privacy
 
 export function getProxyAudioUrl(enclosureUrl: string): string {
 	return `/api/proxy/audio?url=${encodeURIComponent(enclosureUrl)}`;
+}
+
+export function getProxyImageUrl(imageUrl: string): string {
+	return `/api/proxy/image?url=${encodeURIComponent(imageUrl)}`;
 }
 
 export { ApiError };

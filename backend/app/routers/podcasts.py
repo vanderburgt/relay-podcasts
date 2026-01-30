@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Query, Request
+from fastapi import APIRouter, Query, Request, Response
 from fastapi.responses import StreamingResponse
 
 from app.services import podcast_index
-from app.services.audio_proxy import stream_audio
+from app.services.audio_proxy import fetch_image, stream_audio
 
 router = APIRouter(tags=["podcasts"])
 
@@ -32,3 +32,10 @@ async def proxy_audio(request: Request, url: str = Query(...)):
     """Proxy audio streams to hide user IP from podcast hosts."""
     generator, status_code, headers = await stream_audio(url, request)
     return StreamingResponse(generator, status_code=status_code, headers=headers)
+
+
+@router.get("/api/proxy/image")
+async def proxy_image(url: str = Query(...)):
+    """Proxy images to hide user IP from podcast hosts."""
+    content, status_code, headers = await fetch_image(url)
+    return Response(content=content, status_code=status_code, headers=headers)
